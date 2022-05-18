@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <ctime>//chrono
 using namespace std;
 
 /*class Integer {
@@ -36,76 +37,131 @@ private:
 */
 
 class Human {
+
 public:
 
-	Human Talk () {
-		cout << "Human can talk";
-	};
-	Human Eat (string food) {};
-	Human Walk (string distance) {};
+	Human ();
+	Human (string name, string sName, string pName, int setAge, int setHeight, int workingOrNot)
 
-//	Human isWorking (bool HisWorking) {
-		//isWorking = HisWorking;
-		
-//	}
-//	Human isNotWorkin() {}
-	
+		:FirstName_ ("Jane"),
+		SurName_ (""),
+		PantonymicName_ (""),
+		age_ (15),
+		height_ (150),
+		birthDate_ (std::tm ())
+	{
+		this->FirstName_ = name;
+		this->SurName_ = sName;
+		this->PantonymicName_ = pName;
+		this->age_ = setAge;
+		this->height_ = setHeight;
+		this->isWorking_ = workingOrNot;
+	}
 
-	bool getIsWorking () {
-		cout << "Работает?: " << isWorking;
-		return isWorking;
+	// setter and getters
+	void setName (string name, string sName, string pName) {
+		this->FirstName_ = name;
+		this->SurName_ = sName;
+		this->PantonymicName_ = pName;
+	}
+	string getName () const {
+		return (FirstName_ + " " + SurName_ + " " + PantonymicName_);
 	}
 
 	void setAge (int setAge) {
-		age = setAge;
+		this->age_ = setAge;
 
 	}
-
-	int getAge () {
-		cout << "Возраст: " << age << "\n";
-		return age;
+	int getAge () const {
+		return age_;
 	}
-
-	void setName (string name, string SName, string PName) {
-		FirstName = name;
-		SurName = SName;
-		PantonymicName = PName;
-	}
-
-	string getName () {
-		cout << FirstName + " " + SurName + " " + PantonymicName + "\n";
-		return (FirstName + " " + SurName + " " + PantonymicName + "\n");
-	}
-
 
 	void setHeight (int setHeight) {
-		height = setHeight;
+		height_ = setHeight;
+	}
+	int getHeight () const {
+		return height_;
 	}
 
-	int getHeight () {
-		cout << "Рост: " << height;
-		return height;
+	void setIsWorking (bool workingOrNot) {
+		this->isWorking_ = workingOrNot;
 	}
-		
+	bool getIsWorking () const {
+		return isWorking_;
+	}
+
+	// predicate
+	bool isAdult ();
+	// operators and traits
+	friend bool operator == (Human a, Human b);
+
+	bool olderThen (int age);
+
 private:
-	string FirstName = "";
-	string SurName = "";
-	string PantonymicName = "";
-	int age = 0;
-	int height = 150;
-	bool isWorking = true;
+	string FirstName_ = "";
+	string SurName_ = "";
+	string PantonymicName_ = "";
+	tm birthDate_;
+	int age_ = 0;
+	int height_ = 150;
+	bool isWorking_ = true;
 };
 
+class Student {
+public:
+	Student ();
+	Student (Human person, double grades, string group, string direction) {
+		this->person_ = person;
+		this->grades_ = grades;
+		this->group_ = group;
+		this->direction_ = direction;
+	}
+
+	// setters and getters
+	void setName (string name);
+	string getName () const {
+		return person_.getName ();
+	}
+
+private:
+	Human person_;
+	double grades_;
+	string group_;
+	string direction_;
+};
 
 int main () {
 	setlocale (LC_ALL, "Russian");
 	Human h;
-	h.setAge (15);
-	h.getAge ();
+	
+	// Полное имя человека
 	h.setName ("Roman", "Perekrasov", "Olegovich");
-	h.getName ();
+	string Name = h.getName ();
+
+	// Возраст человека
+	h.setAge (15);
+	int Age = h.getAge ();
+
+	// Рост человека
 	h.setHeight (177);
-	h.getHeight ();
-	//h.isWorking (true);
+	int Height = h.getHeight ();
+
+	// Наличие работы
+	h.setIsWorking (true);
+	bool WorkingOrNot = h.getIsWorking ();
+
+	cout << "Человек: " << Name << "\n" << "Возраст: " << Age << "\n" << "Рост: " << Height << "\n" << "Работает?: " << WorkingOrNot << endl;
+	
 	return 0;
+}
+
+Human::Human ()
+	:FirstName_ (""),
+	SurName_ (""),
+	PantonymicName_ (""),
+	birthDate_ ({}),
+	age_ (15),
+	height_ (150)
+{
+	// to-do data insertion
 }
