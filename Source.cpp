@@ -3,39 +3,6 @@
 #include <ctime>//chrono
 using namespace std;
 
-/*class Integer {
-public:
-	// какой-то код
-	
-protected:
-	// какой-то код
-
-private:
-	// какой-то код
-	
-};*/
-
-/*
-class Integer {
-public:
-	// способы создания объектов
-	Integer(){ } // конструктор по умолчанию
-	Integer(bool sign, unsigned units){ } // конструктор с параметрами
-	Integer(int number) { } // 
-	// способы обработки объектов
-
-	// способы проверки состояний объекта
-
-	// перегрузки операторов
-
-
-private:
-	// поля данных и методы не для пользователя
-	bool sign;
-	unsigned units;
-};
-*/
-
 class Human {
 
 public:
@@ -107,27 +74,174 @@ private:
 	bool isWorking_ = true;
 };
 
+// Задание 1а
+
 class Student {
 public:
 	Student ();
-	Student (Human person, double grades, string group, string direction) {
+	Student (Human person, int grades[5], string group, string direction) {
 		this->person_ = person;
-		this->grades_ = grades;
+		for (int i = 0; i < 5; i++)
+			this->grades_[i] = grades[i];
 		this->group_ = group;
 		this->direction_ = direction;
 	}
 
 	// setters and getters
-	void setName (string name);
-	string getName () const {
-		return person_.getName ();
+	void setHuman(Human person) {
+		this->person_ = person;
+	}
+	Human getHuman() const {
+		return person_;
+	}
+
+	void setGrades(float grades[5]) {
+		for (int i = 0; i < 5; i++)
+			this->grades_[i] = grades[i];
+	}
+	int getAverageGrade() const{
+		float sum = 0;
+		for (int i = 0; i < 5; i++)
+			sum += grades_[i];
+		return sum / 5;
+	}
+
+	void setGroup(string group) {
+		this->group_ = group;
+	}
+	string getGroup() const {
+		return group_;
+	}
+
+	void setDirection(string direction) {
+		this->direction_ = direction;
+	}
+
+	string getDirection() const {
+		return direction_;
 	}
 
 private:
 	Human person_;
-	double grades_;
+
+	// Хранение успеваемости студента
+	float grades_[5];
 	string group_;
 	string direction_;
+};
+
+// Задание 1б
+
+class Appartment {
+public:
+	Human person;
+	Appartment();
+	Appartment(Human person, string adress, double square, string listOfTenants[10], double livingWageCoefficcient) {
+		this->adress_ = adress;
+		this->square_ = square;
+		for (int i = 0; i < 10; i++)
+			this->listOfTenants_[i] = listOfTenants[i];
+		this->livingWageCoefficient_ = livingWageCoefficcient;
+	}
+	// setters and getters
+	void setAdress(string adress) {
+		this->adress_ = adress;
+	}
+
+	string getAdress() const {
+		return adress_;
+	}
+
+	void setSquare(double square) {
+		this->square_ = square;
+	}
+
+	double getSquare() const {
+		return square_;
+	}
+
+	void setListOfTenants(string listOfTenants[10]) {
+		for (int i = 0; i < 10; i++)
+			this->listOfTenants_[i] = listOfTenants[i];
+	}
+
+	string getListOfTenants() const {
+		string listOfTenants;
+		listOfTenants += "\n";
+		for (int i = 0; i < 10; i++)
+			if (i < 9)
+				listOfTenants += listOfTenants_[i] + " \n";
+			else
+				listOfTenants += listOfTenants_[i];
+		
+		return listOfTenants;
+	}
+
+	void setLivingWage(double livingWageCoefficcient) {
+		this->livingWageCoefficient_ = livingWageCoefficcient;
+	}
+
+	double getLivingWage() const {
+		return livingWageCoefficient_;
+	}
+
+private:
+	string adress_;
+	double square_;
+	string listOfTenants_[10];
+	double livingWageCoefficient_;
+};
+
+// Задание 3
+
+class Fraction {
+public:
+	Fraction();
+	Fraction(int numerator, int denominator) {
+		this->numerator_ = numerator;
+		this->denominator_ = denominator;
+	}
+
+	// setters and getters
+	void composition(int numerator, int denominator) {
+		this->numerator_ = numerator;
+		this->denominator_ = denominator;
+	}
+
+	int getCompositionResult() const {
+		return numerator_ + denominator_;
+	}
+	
+	void subtraction(int numerator, int denominator) {
+		this->numerator_ = numerator;
+		this->denominator_ = denominator;
+	}
+
+	int getSubtractionResult() const {
+		return numerator_ - denominator_;
+	}
+
+	void multiplication(int numerator, int denominator) {
+		this->numerator_ = numerator;
+		this->denominator_ = denominator;
+	}
+
+	int getMultiplicationResult() const {
+		return numerator_ * denominator_;
+	}
+
+	void division(int numerator, int denominator) {
+		this->numerator_ = numerator;
+		this->denominator_ = denominator;
+	}
+
+	int getDivisionResult() const {
+		return numerator_ / denominator_;
+	}
+
+private:
+	int numerator_;
+	int denominator_;
 };
 
 int main () {
@@ -150,8 +264,114 @@ int main () {
 	h.setIsWorking (true);
 	bool WorkingOrNot = h.getIsWorking ();
 
-	cout << "Человек: " << Name << "\n" << "Возраст: " << Age << "\n" << "Рост: " << Height << "\n" << "Работает?: " << WorkingOrNot << endl;
+	cout << "Human: " << Name << "\n";
+	cout << "Age: " << Age << "\n";
+	cout << "Height: " << Height << "\n";
+	cout << "Is working?: ";
+	if (WorkingOrNot)
+		cout << "True" << endl;
+	else
+		cout << "False" << endl;
 	
+	// Задание 1a
+
+	cout << "\nTast 1a\n";
+
+	Student Vasya;
+	Vasya.setHuman(h);
+	Vasya.getHuman();
+
+	float VasyaGrades[5] = { 5.0, 4.0, 5.0, 4.0, 5.0 };
+	Vasya.setGrades(VasyaGrades);
+	int VasyaAvgGrades = Vasya.getAverageGrade();
+
+	Vasya.setGroup("BV111");
+	string VasyaGroup = Vasya.getGroup();
+
+	Vasya.setDirection("IT");
+	string VasyaDirection = Vasya.getDirection();
+
+	cout << "\nStudent: Vasya" << "\n";
+	cout << "Average grade: " << VasyaAvgGrades << "\n";
+	cout << "Group: " << VasyaGroup << "\n";
+	cout << "Specialization: " << VasyaDirection << "\n";
+
+	// Задание 1б
+
+	cout << "\nTast 1b\n";
+
+	Appartment VasyasHouse;
+	VasyasHouse.setAdress("Industrii street 21-11");
+	string VasyasAdress = VasyasHouse.getAdress();
+
+	VasyasHouse.setSquare(60.0);
+	double VasyasHouseSquare = VasyasHouse.getSquare();
+
+	string listOfTenants[10] = { "Katya", "Petya", "Nastya", "Volodya", "Dima", "Olga", "Helga", "Vita", "Gerda", "Kai" };
+	VasyasHouse.setListOfTenants(listOfTenants);
+	string listOfTenantsFull = VasyasHouse.getListOfTenants();
+
+	VasyasHouse.setLivingWage(59.0);
+	double livingWageCoefficient = VasyasHouse.getLivingWage();
+
+
+	cout << "\nVasya's Adress: " << VasyasAdress << "\n";
+	cout << "Vasya's square amount: " << VasyasHouseSquare << "\n";
+	cout << "Vasya's list of Tenants: " << listOfTenantsFull << "\n";
+	cout << "Living Wage Coefficient: ";
+	while (livingWageCoefficient) {
+		if (livingWageCoefficient >= 33.0 && livingWageCoefficient <= 42.0) {
+			cout << "Family of 2 people\n";
+			break;
+		}
+		else
+			if (livingWageCoefficient >= 42.0 && livingWageCoefficient <=60.0) {
+				cout << "Family of 3 people\n";
+				break;
+			}
+			else
+				if (livingWageCoefficient >= 60.0) {
+					cout << "Family of 4 and more people\n";
+					break;
+				}
+	}
+
+	// Задание 3
+
+	cout << "\nTask 3\n";
+
+	Fraction numbers;
+	int x, y;
+	cout << "\nEnter two numbers for composion: ";
+	cin >> x >> y;
+	numbers.composition(x, y);
+	int composition = numbers.getCompositionResult();
+
+	cout << "Enter two numbers for subtraction: ";
+	cin >> x >> y;
+	if (x < y)
+		swap(x, y);
+	numbers.subtraction(x, y);
+	int subtraction = numbers.getSubtractionResult();
+
+	cout << "Enter two numbers for multiplication: ";
+	cin >> x >> y;
+	if (x, y)
+		numbers.multiplication(x, y);
+	int multiplication = numbers.getMultiplicationResult();
+
+	cout << "Enter two number for division: ";
+	cin >> x >> y;
+	if (x < y)
+		swap(x, y);
+	numbers.division(x, y);
+	int division = numbers.getDivisionResult();
+
+	cout << "\nComposition: " << composition << "\n";
+	cout << "Subtraction: " << subtraction << "\n";
+	cout << "Multiplication: " << multiplication << "\n";
+	cout << "Division: " << division << "\n";
+
 	return 0;
 }
 
@@ -165,3 +385,32 @@ Human::Human ()
 {
 	// to-do data insertion
 }
+
+// Задание 3
+
+Fraction::Fraction()
+	:numerator_(1),
+	denominator_(1)
+{
+}
+
+
+// Задание 1б
+
+Appartment::Appartment()
+	:adress_("Lenina Street"),
+	square_(0),
+	listOfTenants_(),
+	livingWageCoefficient_(30)
+{
+}
+
+// Задание 1a
+
+Student::Student()
+	:grades_(),
+	group_(""),
+	direction_("")
+{
+}
+
